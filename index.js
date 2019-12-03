@@ -14,7 +14,8 @@ const methodOverride = require("method-override");
 const fileUpload = require("express-fileupload");
 const session = require("express-session");
 
-const config = require('./config/config');
+// Load dotenv variables
+require("dotenv").config({path:"./config/config.env"});
 
 // Initializing express
 const app = express();
@@ -27,9 +28,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 // ************************* SETUP END
 
 // DATABASE CONNECTION START ************
-mongoose.connect(config.getDB(), {useNewUrlParser: true, useUnifiedTopology: true})
+const mongoDBUrl = `mongodb+srv://${process.env.dbUser}:${process.env.dbPass}@cluster0-apgkj.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`;
+mongoose.connect(mongoDBUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
-    console.log(`Database is connected`);
+    console.log(`Connected to database`);
 })
 .catch((err) => {
     console.log(`Error connecting to database: ${err}`);
@@ -178,7 +180,7 @@ try {
 
             let options = {
                 auth: {
-                    api_key: config.sendgridKey
+                    api_key: process.env.sendgridKey
                 }
             }
 
