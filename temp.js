@@ -60,31 +60,7 @@ app.get("/registration", (req, res) => {
 
 // User Registration form process
 app.post('/registration', (req,res) => {
-
-    // Create mongoose schema
-    const Schema = mongoose.Schema;
-    const userSchema = new Schema({
-  
-    email: {
-        type: String,
-        required: true
-    },
-
-    fName: {
-        type: String,
-        required: true
-    },
-
-    lName: {
-        type: String,
-        required: true
-    },
-
-    password: {
-        type: String,
-        required: true
-    }
-});
+    
 
 // Try/catch to avoid model error
 let User;
