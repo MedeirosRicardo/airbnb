@@ -10,6 +10,10 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const fileUpload = require("express-fileupload");
+const session = require("express-session");
+
 const config = require('./config/config');
 
 // Initializing express
