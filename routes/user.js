@@ -2,7 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const path = require("path");
 
 // REGULAR EXPRESSION
 // Email
@@ -10,7 +9,7 @@ const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 
 // Allows CRUD operations
-const user = require("../models/user");
+const User = require("../models/user");
 
 // Route to user registration
 router.get("/registration", (req,res) => {
@@ -40,6 +39,10 @@ router.post("/registration", (req,res) => {
 
     if (newUser.lName.trim() == '') {
         errors.push("Please enter a valid last name");
+    }
+
+    if (newUser.password != req.body.psw2) {
+        errors.push("Please make sure your passwords match");
     }
 
     if (passwordRegexp.test(newUser.password) == false) {
