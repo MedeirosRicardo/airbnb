@@ -26,10 +26,6 @@ const userSchema = new Schema({
         required: true
     },
 
-    profilePic: {
-        type: String
-    },
-
     userType: {
         type: String,
         default: "User"
