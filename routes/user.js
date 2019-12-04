@@ -87,7 +87,7 @@ router.post("/registration", (req,res) => {
                     }
                 });
 
-                res.redirect("users/dashboard");
+                res.redirect("/users/dashboard");
             })
             .catch(err => console.log(`Error: ${err}`));
     }
@@ -120,7 +120,7 @@ router.post("/login", (req, res) => {
 
     // Validation is OK
     else {
-        res.redirect("users/dashboard");
+        res.redirect("/users/dashboard");
     }
 });
 

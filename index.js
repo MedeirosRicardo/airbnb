@@ -30,17 +30,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(fileUpload());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
-app.engine("handlebars", exphbs());
-app.set("view engine", "handlebars");
-
-// Map express to routes objects
-app.use("/",generalRoutes);
-app.use("/user",userRoutes);
-app.use("/room",roomRoutes);
-
-app.use("/",(req,res) => {
-    res.render("general/404");
-});
 
 // Session setup
 app.use(session({secret: "This is my secret key."}));
@@ -48,6 +37,14 @@ app.use((req,res,next) => {
     res.locals.user=req.session.userInfo;
     next();
 });
+
+// Map express to routes objects
+app.use("/",generalRoutes);
+app.use("/user",userRoutes);
+app.use("/room",roomRoutes);
+
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
 // ************************* SETUP END
 
 
