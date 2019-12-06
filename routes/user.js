@@ -11,6 +11,11 @@ const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 // Allows CRUD operations
 const User = require("../models/user");
 
+// Route to dashboard
+router.get("/dashboard", (req, res) => {
+    res.render("users/dashboard");
+});
+
 // Route to user registration
 router.get("/registration", (req,res) => {
     res.render("users/registration");
@@ -28,6 +33,18 @@ router.post("/registration", (req,res) => {
     }
 
     const errors = [];
+
+    // Check if user is unique
+    User.findOne({email: newUser.email})
+        .then(t => {
+            if (t) {
+                errors.push("Email already exist");
+                res.render("users/registration", {
+                    messages: errors
+                });
+            }
+        })
+        .catch(err=>console.log(`Error: ${err}`));
 
     if (emailRegexp.test(newUser.email) == false) {
         errors.push("Please enter a valid email");
@@ -90,7 +107,7 @@ router.post("/registration", (req,res) => {
                     }
                 });
 
-                res.redirect("/users/dashboard");
+                res.redirect("/user/dashboard");
             })
             .catch(err => console.log(`Error: ${err}`));
     }
@@ -123,13 +140,8 @@ router.post("/login", (req, res) => {
 
     // Validation is OK
     else {
-        res.redirect("/users/dashboard");
+        res.redirect("/user/dashboard");
     }
-});
-
-// Route to dashboard
-router.get("/dashboard", (req, res) => {
-    res.render("users/dashboard");
 });
 
 module.exports = router;
