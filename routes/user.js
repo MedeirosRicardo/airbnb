@@ -113,34 +113,71 @@ router.post("/registration", (req,res) => {
     }
 });
 
-// Rote to user login
+// Route to user login
 router.get("/login", (req, res) => {
     res.render("users/login");
 });
 
 // User login form process
 router.post("/login", (req, res) => {
-    
+
     const errors = [];
 
-    if(req.body.email.trim() == '') {
+    const formData = {
+        email: req.body.email,
+        password: req.body.psw
+    }
+
+    if (formData.email.trim() == '') {
         errors.push("Please enter a email");
     }
 
-    if(req.body.psw.trim() == '') {
+    if (formData.password.trim() == '') {
         errors.push("Please enter a password");
     }
 
     // There are errors during validation
-    if(errors.length > 0) {
+    if (errors.length > 0) {
         res.render("users/login", {
-            messages:errors
+            messages: errors
         });
     }
 
     // Validation is OK
     else {
-        res.redirect("/user/dashboard");
+        User.findOne({ email: formData.email })
+        .then(t => {
+
+            // If email does not exist, not a user
+            if (t == null) {
+                errors.push("Sorry, you entered the wrong username and/or password");
+                res.render("users/login", {
+                    messages: errors
+                });
+            }
+
+            // Email exist
+            else {
+                bcrypt.compare(formData.password, t.password)
+                    .then(isMatched => {
+
+                        // Password is correct
+                        if (isMatched == true) {
+                            req.session.userInfo = t;
+                            res.redirect("/user/dashboard");
+                        }
+
+                        // Password is wrong
+                        else {
+                            errors.push("Sorry, you entered the wrong username and/or password");
+                            res.render("users/login", {
+                                messages: errors
+                            });
+                        }
+                    })
+                    .catch(err => console.log(`Error: ${err}`));
+            }
+        });
     }
 });
 
