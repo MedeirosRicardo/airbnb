@@ -11,9 +11,22 @@ const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 // Allows CRUD operations
 const User = require("../models/user");
 
-// Route to dashboard
+// Route to user dashboard
 router.get("/dashboard", (req, res) => {
     res.render("users/dashboard");
+});
+
+// Route to admin dashboard
+router.get("/admin", (req, res) => {
+    res.render("users/admin");
+});
+
+// Logout router
+router.get("/logout", (req,res) => {
+
+    // Destroy the session
+    req.session.destroy();
+    res.redirect("/user/login");
 });
 
 // Route to user registration
@@ -163,8 +176,17 @@ router.post("/login", (req, res) => {
 
                         // Password is correct
                         if (isMatched == true) {
-                            req.session.userInfo = t;
-                            res.redirect("/user/dashboard");
+
+                            // User login
+                            if (t.userType == "User") {
+                                req.session.userInfo = t;
+                                res.redirect("/user/dashboard");
+                            }
+
+                            if (t.userType == "Admin") {
+                                req.session.userInfo = t;
+                                res.redirect("/user/admin");
+                            }
                         }
 
                         // Password is wrong

@@ -34,7 +34,7 @@ app.use(express.static("public"));
 // Session setup
 app.use(session({secret: "This is my secret key."}));
 app.use((req,res,next) => {
-    res.locals.user=req.session.userInfo;
+    res.locals.t=req.session.userInfo;
     next();
 });
 
