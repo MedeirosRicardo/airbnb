@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 
+// Import authentication
+const hasAccess = require("../middleware/auth");
+
 // REGULAR EXPRESSION
 // Email
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -12,12 +15,12 @@ const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 const User = require("../models/user");
 
 // Route to user dashboard
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", hasAccess, (req, res) => {
     res.render("users/dashboard");
 });
 
 // Route to admin dashboard
-router.get("/admin", (req, res) => {
+router.get("/admin", hasAccess, (req, res) => {
     res.render("users/admin");
 });
 
