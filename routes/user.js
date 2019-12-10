@@ -15,12 +15,12 @@ const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 const User = require("../models/user");
 
 // Route to user dashboard
-router.get("/dashboard", hasAccess, (req, res) => {
+router.get("/dashboard", /*hasAccess,*/ (req, res) => {
     res.render("users/dashboard");
 });
 
 // Route to admin dashboard
-router.get("/admin", hasAccess, (req, res) => {
+router.get("/admin", /*hasAccess,*/ (req, res) => {
     res.render("users/admin");
 });
 

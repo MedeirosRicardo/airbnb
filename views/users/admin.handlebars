@@ -6,7 +6,22 @@
         <br>
         <h2>Welcome {{t.fName}} {{t.lName}}</h2>
         <br>
-        <br>
+        <h3>
+            <a href="/room/add">Create a room</a>
+        </h3>
+        <div>
+            {{#each list}} 
+            <div>
+            {{this.title}} &nbsp;&nbsp;
+            <a href="/room/edit/{{this._id}}">Edit</a> &nbsp;&nbsp;
+            <form id="deleteButtonForm" method="POST" action="/room/delete/{{this._id}}?_method=DELETE">
+                <input type="submit" value="Delete" class="delButtons" data-id="{{this.id}}" data-title="{{this.title}}">
+            </form>
+            </div>
+            {{else}}
+                No rooms in database 
+            {{/each}}
+        </div>
         <br>
         <div id="divButton">
             <a href="/user/logout" id="findButton">Logout</a>

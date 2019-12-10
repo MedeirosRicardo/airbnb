@@ -1,0 +1,25 @@
+<div class="bg"></div>
+<section id="form-outside">
+    <form id="form" method="POST" action="/user/login">
+        <h1>Add Room</h1>
+        {{#each messages}}
+        <div class="error">
+            {{this}}
+        </div>
+        {{/each}}
+
+        <input class="input" type="text" name="title" placeholder="Title">
+        <br>
+        <input class="input" type="number" name="price" placeholder="Price">
+        <br>
+        <textarea class="input" name="description" placeholder="Description"></textarea>
+        <br>
+        <input class="input" type="text" name="location" placeholder="Location">
+        <br>
+        <br>
+        <input type="file" name="photo">
+        <div id="divButton">
+            <input type="submit" id="findButton" value="Log in">
+        </div>
+    </form>
+</section>

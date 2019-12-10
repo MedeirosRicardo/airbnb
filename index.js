@@ -32,9 +32,11 @@ app.use(methodOverride("_method"));
 app.use(express.static("public"));
 
 // Session setup
-app.use(session({secret: "This is my secret key."}));
+app.use(session({secret: "This is my secret key.",
+resave: true,
+saveUninitialized: true}));
 app.use((req,res,next) => {
-    res.locals.t=req.session.userInfo;
+    res.locals.t = req.session.userInfo;
     next();
 });
 
