@@ -5,7 +5,8 @@ const bcrypt = require("bcryptjs");
 const Room = require("../models/room");
 
 // Import authentication
-const hasAccess = require("../middleware/auth");
+const userAccess = require("../middleware/userAuth");
+const adminAccess = require("../middleware/adminAuth");
 
 // REGULAR EXPRESSION
 // Email
@@ -16,12 +17,12 @@ const passwordRegexp = /^[A-Za-z0-9]{6,12}$/;
 const User = require("../models/user");
 
 // Route to user dashboard
-router.get("/dashboard", /*hasAccess,*/ (req, res) => {
+router.get("/dashboard", userAccess, (req, res) => {
     res.render("users/dashboard");
 });
 
 // Route to admin dashboard
-router.get("/admin", /*hasAccess,*/ (req, res) => {
+router.get("/admin", adminAccess, (req, res) => {
     Room.find()
     .then((rooms) => {
         res.render("users/admin", {
@@ -186,15 +187,13 @@ router.post("/login", (req, res) => {
 
                         // Password is correct
                         if (isMatched == true) {
-
+                            req.session.userInfo = t;
+                            
                             // User login
                             if (t.userType == "User") {
-                                req.session.userInfo = t;
                                 res.redirect("/user/dashboard");
-                            }
-
-                            if (t.userType == "Admin") {
-                                req.session.userInfo = t;
+                            } else {
+                                req.session.adminInfo = t;
                                 res.redirect("/user/admin");
                             }
                         }

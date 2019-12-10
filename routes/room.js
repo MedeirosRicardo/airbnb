@@ -4,6 +4,10 @@ const router = express.Router();
 const Room = require("../models/room");
 const path = require("path");
 
+// Import authentication
+const userAccess = require("../middleware/userAuth");
+const adminAccess = require("../middleware/adminAuth");
+
 // Route to room list
 router.get("/room", (req, res) => {
     
@@ -17,12 +21,12 @@ router.get("/room", (req, res) => {
 });
 
 // Router to add room
-router.get("/add", (req,res) => {
+router.get("/add", adminAccess, (req,res) => {
     res.render("rooms/add");
 });
 
 // Process add room
-router.post("/add", (req,res) => {
+router.post("/add", adminAccess, (req,res) => {
     
     const newRoom = {
         title: req.body.title,
@@ -90,7 +94,7 @@ router.post("/add", (req,res) => {
 });
 
 // Route to edit room
-router.get("/edit/:id", (req,res) => {
+router.get("/edit/:id", adminAccess, (req,res) => {
     Room.findById(req.params.id)
     .then((room) => {
         res.render("rooms/edit", {
@@ -101,7 +105,7 @@ router.get("/edit/:id", (req,res) => {
 });
 
 // Route to process edit information
-router.put("/edit/:id", (req,res) => {
+router.put("/edit/:id", adminAccess, (req,res) => {
     Room.findById(req.params.id)
     .then((room) => {
         room.title=req.body.title;
@@ -128,7 +132,7 @@ router.put("/edit/:id", (req,res) => {
 });
 
 // Route to delete room
-router.delete("/delete/:id", (req,res) => {
+router.delete("/delete/:id", adminAccess, (req,res) => {
     Room.deleteOne({_id:req.params.id})
     .then(() => {
         res.redirect("/user/admin");
