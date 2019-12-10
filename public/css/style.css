@@ -252,6 +252,33 @@ footer {
     border :1px solid red;
 }
 
+.editButton {
+    background-color: rgb(85, 165, 210);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight:bold;
+    padding: 10px 17px;
+    text-decoration: none;
+    border: none;
+    margin: 15px;
+}
+
+.delButton {
+    display: inline;
+    background-color: #e4685d;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight:bold;
+    padding: 10px 17px;
+    text-decoration: none;
+    border: none;
+    margin: 15px;
+}
+
 @media only screen and (max-width: 1130px) {
     #roomsGrid {
         grid-template-columns: 1fr 1fr;

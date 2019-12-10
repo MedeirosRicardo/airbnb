@@ -48,11 +48,7 @@ router.post("/add", (req,res) => {
     // If errors
     if (errors.length > 0) {
         res.render("rooms/add", {
-            messages: errors,
-            title: newRoom.title,
-            price: newRoom.price,
-            description: newRoom.description,
-            location: newRoom.location,
+            messages: errors
         });
     }
 
@@ -85,16 +81,59 @@ router.post("/add", (req,res) => {
                 const errors = [];
                 errors.push("All fields are mandatory");
                 res.render("rooms/add", {
-                    messages: erros,
-                    title: newRoom.title,
-                    price: newRoom.price,
-                    description: newRoom.description,
-                    location: newRoom.location,
+                    messages: errors
                 });
             }
         });
     }
 
+});
+
+// Route to edit room
+router.get("/edit/:id", (req,res) => {
+    Room.findById(req.params.id)
+    .then((room) => {
+        res.render("rooms/edit", {
+            roomDocument: room
+        });
+    })
+    .catch(err=>console.log(`Error: ${err}`));
+});
+
+// Route to process edit information
+router.put("/edit/:id", (req,res) => {
+    Room.findById(req.params.id)
+    .then((room) => {
+        room.title=req.body.title;
+        room.price=req.body.price;
+        room.description=req.body.description;
+        room.location=req.body.location;
+
+        room.save()
+        .then(() => {
+            res.redirect("/user/admin");
+        })
+        .catch((err) => {
+            if (err) {
+                const errors = [];
+                errors.push("All fields are mandatory");
+                res.render("rooms/edit", {
+                    messages: errors,
+                    roomDocument: room
+                });
+            }
+        });
+    })
+    .catch(err=>console.log(`Error: ${err}`));
+});
+
+// Route to delete room
+router.delete("/delete/:id", (req,res) => {
+    Room.deleteOne({_id:req.params.id})
+    .then(() => {
+        res.redirect("/user/admin");
+    })
+    .catch(err=>console.log(`Error: ${err}`));
 });
 
 module.exports = router;

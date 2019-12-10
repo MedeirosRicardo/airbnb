@@ -5,22 +5,22 @@ const Schema = mongoose.Schema;
 const roomSchema = new Schema({
     title: {
         type: String,
-        require: true
+        required: true
     },
 
     price: {
         type: Number,
-        require: true
+        required: true
     },
 
     description: {
         type: String,
-        require: true
+        required: true
     },
 
     location: {
         type: String,
-        require: true
+        required: true
     },
 
     photo: {

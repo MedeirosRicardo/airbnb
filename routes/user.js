@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const Room = require("../models/room");
 
 // Import authentication
 const hasAccess = require("../middleware/auth");
@@ -21,7 +22,13 @@ router.get("/dashboard", /*hasAccess,*/ (req, res) => {
 
 // Route to admin dashboard
 router.get("/admin", /*hasAccess,*/ (req, res) => {
-    res.render("users/admin");
+    Room.find()
+    .then((rooms) => {
+        res.render("users/admin", {
+            list: rooms
+        });
+    })
+    .catch(err=>console.log(`Error: ${err}`));
 });
 
 // Logout router

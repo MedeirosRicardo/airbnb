@@ -1,6 +1,6 @@
 <div class="bg"></div>
 <section id="form-outside">
-    <form id="form" method="POST" action="/user/login">
+    <form id="form" method="POST" action="/room/add" enctype="multipart/form-data">
         <h1>Add Room</h1>
         {{#each messages}}
         <div class="error">
@@ -19,7 +19,7 @@
         <br>
         <input type="file" name="photo">
         <div id="divButton">
-            <input type="submit" id="findButton" value="Log in">
+            <input type="submit" id="findButton" value="Add Room">
         </div>
     </form>
 </section>

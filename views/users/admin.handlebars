@@ -9,13 +9,14 @@
         <h3>
             <a href="/room/add">Create a room</a>
         </h3>
+        <br>
         <div>
             {{#each list}} 
             <div>
-            {{this.title}} &nbsp;&nbsp;
-            <a href="/room/edit/{{this._id}}">Edit</a> &nbsp;&nbsp;
-            <form id="deleteButtonForm" method="POST" action="/room/delete/{{this._id}}?_method=DELETE">
-                <input type="submit" value="Delete" class="delButtons" data-id="{{this.id}}" data-title="{{this.title}}">
+            {{this.title}} <br>
+            <a class="editButton" href="/room/edit/{{this._id}}">Edit</a> &nbsp;&nbsp;
+            <form class="delButton" id="deleteButtonForm" method="POST" action="/room/delete/{{this._id}}?_method=DELETE">
+                <input type="submit" class="delButton" value="Delete" data-id="{{this.id}}" data-title="{{this.title}}">
             </form>
             </div>
             {{else}}
@@ -23,10 +24,10 @@
             {{/each}}
         </div>
         <br>
+        <br>
         <div id="divButton">
             <a href="/user/logout" id="findButton">Logout</a>
         </div>
-        <br>
         <br>
     </div>
 </section>
