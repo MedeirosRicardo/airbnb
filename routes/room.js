@@ -136,4 +136,15 @@ router.delete("/delete/:id", (req,res) => {
     .catch(err=>console.log(`Error: ${err}`));
 });
 
+// Route / Process search
+router.post("/search", (req,res) => {
+    Room.find({location:req.body.location})
+    .then((rooms) => {
+        res.render("rooms/rooms", {
+            list: rooms
+        });
+    })
+    .catch(err=>console.log(`Error: ${err}`));
+});
+
 module.exports = router;

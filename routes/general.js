@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 
-// Home
+// Router to Home
 router.get("/", (req, res) => {
     res.render("general/index");
 });
